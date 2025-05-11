@@ -281,6 +281,8 @@ class SAM2ImagePredictor:
             raise RuntimeError(
                 "An image must be set with .set_image(...) before mask prediction."
             )
+        
+        self._test_function()
 
         # Transform input prompts
 
@@ -436,6 +438,9 @@ class SAM2ImagePredictor:
             masks = masks > self.mask_threshold
 
         return masks, iou_predictions, low_res_masks
+    
+    def _test_function():
+        print("Possible for modify this inference process")
 
     def get_image_embedding(self) -> torch.Tensor:
         """
