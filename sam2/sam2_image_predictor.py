@@ -439,7 +439,7 @@ class SAM2ImagePredictor:
 
         return masks, iou_predictions, low_res_masks
     
-    def _test_function():
+    def _test_function(self):
         print("Possible for modify this inference process")
 
     def get_image_embedding(self) -> torch.Tensor:
