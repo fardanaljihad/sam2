@@ -12,6 +12,7 @@ import numpy as np
 import cv2
 import torch
 from PIL.Image import Image
+from scipy.ndimage import label
 
 from sam2.modeling.sam2_base import SAM2Base
 
