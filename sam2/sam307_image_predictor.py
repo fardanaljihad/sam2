@@ -527,7 +527,7 @@ class SAM2ImagePredictor:
 
 
     # Point Prompt Augmentation Moduls
-    def _get_random_point(init_mask):
+    def _get_random_point(self, init_mask):
         indices = np.argwhere(init_mask==True)
 
         random_point = indices[np.random.choice(list(range(len(indices))))]
@@ -535,13 +535,13 @@ class SAM2ImagePredictor:
 
         return random_point
 
-    def _get_left_point(point, shift):
+    def _get_left_point(self, point, shift):
         return [point[0] - shift, point[1]]
 
-    def _get_right_point(point, shift):
+    def _get_right_point(self, point, shift):
         return [point[0] + shift, point[1]]
 
-    def _get_horizontal_point(point, num, shift=5):
+    def _get_horizontal_point(self, point, num, shift=5):
         new_points = []
         for i in range(1, num + 1):
             if len(new_points) >= num:
@@ -554,7 +554,7 @@ class SAM2ImagePredictor:
         return np.array(new_points)
 
     # Negative Prompt Calibration
-    def _npc(gt_path, init_mask, class_value, num_points):
+    def _npc(self, gt_path, init_mask, class_value, num_points):
         gt_img = cv2.imread(gt_path, cv2.IMREAD_GRAYSCALE)
 
         class_masks = gt_img * (gt_img == class_value)
