@@ -9,6 +9,7 @@ import logging
 from typing import List, Optional, Tuple, Union
 
 import numpy as np
+import cv2
 import torch
 from PIL.Image import Image
 
