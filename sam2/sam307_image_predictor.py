@@ -319,13 +319,13 @@ class SAM2ImagePredictor:
             init_mask = masks_np[0]
 
             if(strategy_ppa == 1):
-                point_prompt_aug = _get_horizontal_point(point_coords, num_ppa, shift=5)
+                point_prompt_aug = self._get_horizontal_point(point_coords, num_ppa, shift=5)
                 new_prompts = np.vstack((point_coords, point_prompt_aug))
                 new_labels = np.ones(len(point_coords), dtype=int)
             else:
                 point_prompt_aug = []
                 for i in range(num_ppa):
-                    point_prompt_aug.append(_get_random_point(init_mask))
+                    point_prompt_aug.append(self._get_random_point(init_mask))
                     
                 new_prompts = np.concatenate([point_coords, point_prompt_aug], axis=0)
                 new_labels = np.ones(len(new_prompts), dtype=int)
@@ -360,7 +360,7 @@ class SAM2ImagePredictor:
 
             init_mask = masks_np[0]
 
-            neg_points, neg_labels = _npc(gt_path, init_mask, 4, num_npc)
+            neg_points, neg_labels = self._npc(gt_path, init_mask, 4, num_npc)
             if len(neg_points) > 0:
                 new_prompts = np.vstack((new_prompts, neg_points[:num_npc]))
                 new_labels = np.concatenate((new_labels, neg_labels[:num_npc]))
@@ -546,10 +546,10 @@ class SAM2ImagePredictor:
         for i in range(1, num + 1):
             if len(new_points) >= num:
                 break
-            new_points.append(_get_left_point(point, shift * i))
+            new_points.append(self._get_left_point(point, shift * i))
             if len(new_points) >= num:
                 break
-            new_points.append(_get_right_point(point, shift * i))
+            new_points.append(self._get_right_point(point, shift * i))
 
         return np.array(new_points)
 
@@ -578,7 +578,7 @@ class SAM2ImagePredictor:
         neg_points = []
         neg_labels = []
         for i in range(1, num_instances + 1):
-            iou = _calc_iou(init_mask, instances[i-1])
+            iou = self._calc_iou(init_mask, instances[i-1])
             neg_coords = np.argwhere(instances[i-1] > 0)
 
             instance = instances[i-1]
