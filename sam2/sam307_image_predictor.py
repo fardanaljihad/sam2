@@ -353,7 +353,7 @@ class SAM307ImagePredictor:
         if num_npc > 0:
 
             #2 Best init result
-            sorted_ind = np.argsort(scores)[::-1]
+            sorted_ind = np.argsort(iou_predictions_np)[::-1]
             masks_np = masks_np[sorted_ind]
             iou_predictions_np = iou_predictions_np[sorted_ind]
             low_res_masks_np = low_res_masks_np[sorted_ind]
