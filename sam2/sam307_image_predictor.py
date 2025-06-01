@@ -17,7 +17,7 @@ from sam2.modeling.sam2_base import SAM2Base
 from sam2.utils.transforms import SAM2Transforms
 
 
-class SAM2ImagePredictor:
+class SAM307ImagePredictor:
     def __init__(
         self,
         sam_model: SAM2Base,
@@ -319,6 +319,8 @@ class SAM2ImagePredictor:
             init_mask = masks_np[0]
 
             if(strategy_ppa == 1):
+                print("point_coords shape:", point_coords.shape)
+                print("point_coords content:", point_coords)
                 point_prompt_aug = self._get_horizontal_point(point_coords, num_ppa, shift=5)
                 new_prompts = np.vstack((point_coords, point_prompt_aug))
                 new_labels = np.ones(len(point_coords), dtype=int)
