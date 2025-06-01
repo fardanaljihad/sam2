@@ -329,7 +329,7 @@ class SAM307ImagePredictor:
                 for i in range(num_ppa):
                     point_prompt_aug.append(self._get_random_point(init_mask))
                     
-                new_prompts = np.concatenate([point_coords[0], point_prompt_aug], axis=0)
+                new_prompts = np.concatenate([point_coords, point_prompt_aug], axis=0)
                 new_labels = np.ones(len(new_prompts), dtype=int)
 
             #2 Transform input prompts
