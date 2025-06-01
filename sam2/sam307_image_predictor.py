@@ -554,6 +554,20 @@ class SAM2ImagePredictor:
         return np.array(new_points)
 
     # Negative Prompt Calibration
+    def _calc_iou(self, prd, gt):
+        if isinstance(gt, torch.Tensor):
+            gt = gt.squeeze(0).cpu().numpy()
+
+        assert prd.shape == gt.shape
+        prd = prd.reshape(prd.size).copy()
+        gt = gt.reshape(gt.size)
+
+        area_intersection = np.logical_and(prd, gt).sum()
+        area_union = np.logical_or(prd, gt).sum()
+
+        iou = area_intersection / (area_union + 1e-10)
+        return iou
+
     def _npc(self, gt_path, init_mask, class_value, num_points):
         gt_img = cv2.imread(gt_path, cv2.IMREAD_GRAYSCALE)
 
@@ -564,7 +578,7 @@ class SAM2ImagePredictor:
         neg_points = []
         neg_labels = []
         for i in range(1, num_instances + 1):
-            iou = calc_iou(init_mask, instances[i-1])
+            iou = _calc_iou(init_mask, instances[i-1])
             neg_coords = np.argwhere(instances[i-1] > 0)
 
             instance = instances[i-1]
