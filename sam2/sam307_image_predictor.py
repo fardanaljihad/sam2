@@ -319,17 +319,15 @@ class SAM307ImagePredictor:
             init_mask = masks_np[0]
 
             if(strategy_ppa == 1):
-                print("point_coords shape:", point_coords.shape)
-                print("point_coords content:", point_coords)
-                point_prompt_aug = self._get_horizontal_point(point_coords, num_ppa, shift=5)
-                new_prompts = np.vstack((point_coords, point_prompt_aug))
-                new_labels = np.ones(len(point_coords), dtype=int)
+                point_prompt_aug = self._get_horizontal_point(point_coords[0], num_ppa, shift=5)
+                new_prompts = np.vstack((point_coords[0], point_prompt_aug))
+                new_labels = np.ones(len(point_coords[0]), dtype=int)
             else:
                 point_prompt_aug = []
                 for i in range(num_ppa):
                     point_prompt_aug.append(self._get_random_point(init_mask))
                     
-                new_prompts = np.concatenate([point_coords, point_prompt_aug], axis=0)
+                new_prompts = np.concatenate([point_coords[0], point_prompt_aug], axis=0)
                 new_labels = np.ones(len(new_prompts), dtype=int)
 
             #2 Transform input prompts
